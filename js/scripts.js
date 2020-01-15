@@ -8,7 +8,7 @@
 (function($) {
     "use strict"; 
 
-    let marriageDate = (new Date('2020-02-10 12:00:00')).valueOf();
+    let marriageDate = (new Date('2020-02-10T12:00:00')).valueOf();
     updateCountDownTimer(true);
 	
 	/* Preloader */
