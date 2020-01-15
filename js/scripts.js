@@ -7,6 +7,9 @@
 
 (function($) {
     "use strict"; 
+
+    let marriageDate = (new Date('2020-02-10 12:00:00')).valueOf();
+    updateCountDownTimer(true);
 	
 	/* Preloader */
 	$(window).on('load', function() {
@@ -124,7 +127,57 @@
             $( this ).addClass('is-checked');
         });	
     });
+
+
+    function updateCountDownTimer(isFirst){
+        let newTime = new Date(marriageDate);
+        let today = new Date();
+        let remainingTime = (newTime.valueOf() - today.valueOf());
+        if(remainingTime <= 0){
+        clearInterval(timerId);
+        document.querySelector('.counter-container').innerHTML = "<div class='after-counter-msg'>Happily Married</div>";
+        return;
+        }
+        let divide = {days: (1000*60*60*24), hours:(1000*60*60), minutes:(1000*60), seconds: (1000)}
+        let hoursLeft =  Math.floor(remainingTime % divide.days);
+        let minutesLeft = Math.floor(hoursLeft % divide.hours); 
+        let secondsLeft = Math.floor(minutesLeft % divide.minutes);
+        let remaining = {
+        days: Math.floor(remainingTime/divide.days), // converting milli seconds to days
+        hours: Math.floor(hoursLeft/divide.hours),
+        minutes: Math.floor(minutesLeft/divide.minutes),
+        seconds: Math.floor(secondsLeft/ divide.seconds) 
+        }
+        let timeContainer = '';
+        for(let key in remaining){
+            timeContainer += '<div class="cell"><div class="counter-value number-count" data-count='+remaining[key]+'>' + 
+            (isFirst ? 500 : remaining[key]) + '</div><div class="counter-info">'+ key +'</div></div>';
+        }
+
+        document.querySelector('.counter-container').innerHTML = timeContainer;
+    }
     
+    var timerId;
+    var timerInitiated = false;
+    function animateText(){
+        var $this = $(this),
+        countTo = $this.attr('data-count');
+        $({
+        countNum: $this.text()
+        }).animate({
+            countNum: countTo
+        },
+        {
+            duration: 2000,
+            easing: 'swing',
+            step: function() {
+            $this.text(Math.floor(this.countNum));
+            },
+            complete: function() {
+                $this.text(this.countNum);
+            }
+        });
+    }
 
     /* Counter - CountTo */
 	var a = 0;
@@ -132,29 +185,12 @@
 		if ($('#counter').length) { // checking if CountTo section exists in the page, if not it will not run the script and avoid errors	
 			var oTop = $('#counter').offset().top - window.innerHeight;
 			if (a == 0 && $(window).scrollTop() > oTop) {
-			$('.counter-value').each(function() {
-				var $this = $(this),
-				countTo = $this.attr('data-count');
-				$({
-				countNum: $this.text()
-				}).animate({
-					countNum: countTo
-				},
-				{
-					duration: 2000,
-					easing: 'swing',
-					step: function() {
-					$this.text(Math.floor(this.countNum));
-					},
-					complete: function() {
-					$this.text(this.countNum);
-					//alert('finished');
-					}
-				});
-			});
-			a = 1;
+			$('.counter-value').each(animateText);
+            a = 1;
+            clearInterval(timerId);
+            timerId = setInterval(updateCountDownTimer, 1000)
 			}
-		}
+        } 
     });
 
 

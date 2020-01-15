@@ -652,6 +652,28 @@ input[type='checkbox'] {
 
 .navbar-custom .navbar-brand {
 	font-size: 0;
+	animation: 10s imgrotate;
+	transform: rotate(45deg);
+	animation-delay: 2s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes imgrotate{
+	0%{
+		transform: rotate(0deg)
+	}
+	25%{
+		transform: rotate(45deg)
+	}
+	50%{
+		transform: rotate(0deg)
+	}
+	80%{
+		transform: rotate(-45deg)
+	}
+	100%{
+		transform: rotate(0deg)
+	}
 }
 
 .navbar-custom .navbar-brand.logo-image img {    
@@ -773,6 +795,7 @@ input[type='checkbox'] {
 .header {
 	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('../images/header-background.jpg') center center no-repeat;
 	background-size: cover;
+	background-attachment: fixed;
 }
 
 .header .header-content {
@@ -1626,8 +1649,6 @@ input[type='checkbox'] {
 }
 
 .counter #counter .counter-info {
-	display: inline-block;
-	margin-left: 0.5rem;
 	font-size: 0.875rem;
 	line-height: 1.25rem;
 	vertical-align: middle;
@@ -2438,3 +2459,36 @@ a:hover.back-to-top {
 	/* end of navigation */
 }
 /* end of min-width width 1200px */
+
+
+.counter-container{
+	display: flex;
+	justify-content: space-between;
+	text-transform: capitalize;
+	margin-bottom: 15px;
+}
+.counter-container .time{
+	font-size: 2rem;
+	font-weight: 700;
+	color: #14bf98;
+	margin-bottom: 10px;
+}
+
+.girassol {
+	font-family: 'Girassol', cursive;
+}
+
+.couple-color{
+	font-size: 5rem;
+	color: #c3963b;
+}
+
+.after-counter-msg{
+	font-size: 3rem;
+	color: #14bf98;
+	margin-bottom: 20px;
+}
+
+.freebirdFormviewerViewNoPadding{
+ display: none;
+}
